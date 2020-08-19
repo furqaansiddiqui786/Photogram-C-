@@ -1,0 +1,83 @@
+﻿@model Photogram.Models.ViewModels.UserPostViewModel
+@{
+    ViewData["Title"] = "YourPosts";
+}
+
+
+<!--this div contain profile pic and name details-->
+    <div class="row mt-2" style="height:120px;">
+
+        <div class="col-2">           
+                <img src="~/images/user.jpg" class="rounded-circle float-right" style="border:1px solid black" width="100px" height="100px" />
+        </div>
+        <div class="col-6">
+            <div class="float-left mt-4">
+                <h5>@Model.ApplicationUser.PublicName</h5>
+                <h6>@Model.ApplicationUser.UserName</h6>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="float-center mt-4">
+                <h5>Total Posts : @Model.PostModel.Count()</h5>
+            </div>
+        </div>
+
+
+    </div>
+
+    <!--buttons to add and edit profile-->
+    <div class="row">
+        <div class="col-12 text-center">
+            <a asp-action="AddPost" class="text-center" style="color:black;text-decoration-line:none">
+                <h5 class="text-black"><i class="fas fa-plus-circle"></i>Add Post</h5>
+            </a>
+        </div>
+    </div>
+
+    <hr style="background-color:black" />
+
+    <!--this row contains card to show for posts-->
+    @if (Model.PostModel.Count() > 0)
+    {
+        <div class="row">
+            <!--need logic to show posts if have-->
+            @foreach (var post in Model.PostModel)
+            {
+                <div class="col-4 text-center">
+                    <div class="card mt-3" style="width: 22rem;">
+                        @if (post.Post != null)
+                        {
+                            var base64 = Convert.ToBase64String(post.Post);
+                            var pst = string.Format("data:image/jpg;base64,{0}", base64);
+
+                            <a href="@pst" data-lightbox="image">
+                                <img src="@pst" width="330px" height="200px" class="card-img" />
+                            </a>
+
+                        }
+                        else
+                        {
+                            <img src="~/images/banner.png" width="330px" height="200px" class="card-img" />
+                        }
+                        <div class="card-footer">
+                            <a asp-action="Delete" asp-route-id="@post.Id">
+                                <i class="fas fa-trash text-danger"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    }
+    else
+    {
+        <h4 class="text-black-50 text-center mt-4">@Model.ApplicationUser.PublicName you dont have any posts yet</h4>
+    }
+
+
+
+
+
+
+

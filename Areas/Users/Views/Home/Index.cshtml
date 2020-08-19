@@ -1,0 +1,65 @@
+﻿@model IEnumerable<PostsModel>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+
+@if (User.Identity.IsAuthenticated)
+{
+    <h2 class="branded">Photos by Photogramers</h2>
+    <hr />
+    @if (Model.Count() > 0)
+    {
+        <div class="row">
+            @foreach (var posts in Model)
+            {
+                <div class="col-4 text-center">
+                    <div class="card mt-3" style="width: 22rem;">
+                        @if (posts.Post != null)
+                        {
+                            var base64 = Convert.ToBase64String(posts.Post);
+                            var pst = string.Format("data:image/jpg;base64,{0}", base64);
+
+                            <a href="@pst" data-lightbox="image">
+                                <img src="@pst" width="330px" height="200px" class="card-img" />
+                            </a>
+
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    }
+
+}
+else
+{
+    <div class="row">
+
+        <div class="col-4" style="margin-top:8%">
+            <img src="~/images/banner.png" width="500" height="300" />
+        </div>
+
+        <div class="col-8 mt-5">
+            <div class="card p-5" style="width:60%; border:1px solid #808080;left:30%;right:30%;">
+
+                <center>
+                    <img src="~/images/logo.png" class="text-center" width="50" height="50" />
+                </center>
+
+                <br />
+
+                <a>Share your photos anonymously</a>
+                <a>See what photos people are posting online</a>
+                <a>view and share photos online</a>
+                <a>Login or Register to see photos from others</a>
+                <br />
+                <a asp-area="Identity" asp-controller="Account" asp-action="Register" class="btn btn-primary">Register Now!</a>
+                <b class="text-center">(or)</b>
+                <a asp-area="Identity" asp-controller="Account" asp-action="Login" class="btn btn-primary">Login in your Account</a>
+            </div>
+        </div>
+
+    </div>
+}

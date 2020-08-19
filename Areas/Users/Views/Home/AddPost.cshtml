@@ -1,0 +1,24 @@
+﻿@model PostsModel
+@{
+    ViewData["Title"] = "AddPost";
+}
+
+<div class="card p-5 mt-5" style="width:50%; border:1px solid #808080;left:25%;right:25%;">
+
+    <center>
+        <img src="~/images/logo.png" class="text-center" width="50" height="50" /><br />
+        <h5>Upload a Photo</h5>
+    </center>
+
+    <br />
+
+    <form method="post" enctype="multipart/form-data" class="form-group">
+        <input type="hidden" asp-for="@Model.UserId" />
+        <label><b>Select a photo</b></label>
+        <input type="file" name="file" id="PhotoPost" class="form-control" asp-for="Post" required />
+        <br />
+        <button type="submit" class="form-control btn btn-primary">Upload Post</button>
+    </form>
+
+</div>
+
